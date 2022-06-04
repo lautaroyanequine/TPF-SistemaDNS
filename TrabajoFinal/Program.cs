@@ -33,12 +33,27 @@ namespace TPF
 			ArbolGeneral b= new ArbolGeneral( valores[1]);
 			ArbolGeneral c= new ArbolGeneral( valores[2]);
 			DNS.agregarDominio("www.Wikipedia.org","1","web");
-//			DNS.agregarHijo(a);
-//			DNS.agregarHijo(b);
-//			DNS.agregarHijo(c);
-			DNS.porNivelesConSeparacion();
+					DNS.porNivelesConSeparacion();
 			
-			
+//						DNS.porNivelesConSeparacion();
+//			DNS.agregarDominio("www.Wikipedia.org","1","web");
+//			DNS.agregarDominio("weew.Wikipedia.org","1","web");
+//			DNS.agregarDominio("ee.Wikipedia.org","1","web");
+			DNS.agregarDominio("ee.Wikipedia.com","1","web");
+			DNS.agregarDominio("www.Wikipediña.org","1","web");
+			DNS.agregarDominio("e.Wikipedia.com","1","web");
+		DNS.porNivelesConSeparacion();
+//			DNS.agregarDominio("www.Weikipedia.com","1","web");
+//						DNS.porNivelesConSeparacion();
+//			DNS.agregarDominio("www.Weikipedia.es","1","web");
+//			DNS.porNivelesConSeparacion();
+//			DNS.agregarDominio("es.google.ar","1","web");
+////			DNS.agregarHijo(a);
+////			DNS.agregarHijo(b);
+////			DNS.agregarHijo(c);
+//			DNS.porNivelesConSeparacion();
+//			
+//			
 			
 	
 			
