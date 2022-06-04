@@ -33,11 +33,13 @@ namespace TPF
 			ArbolGeneral b= new ArbolGeneral( valores[1]);
 			ArbolGeneral c= new ArbolGeneral( valores[2]);
 			DNS.agregarDominio("www.Wikipedia.org","1","web");
-			DNS.agregarDominio("www.ONU.org","2","web");
-			DNS.agregarDominio("www.facebook.com","3","web");
-			DNS.agregarDominio("ar.facebook.com","4","web");
+//			DNS.agregarDominio("www.ONU.org","2","web");
+//			DNS.agregarDominio("www.facebook.com","3","web");
+//			DNS.agregarDominio("ar.facebook.com","4","web");
 			DNS.agregarDominio("www.google.com","5","web");
 			DNS.porNivelesConSeparacion();
+			
+			DNS.devolverIpyServicios("www.google.com");
 			
 //						DNS.porNivelesConSeparacion();
 //			DNS.agregarDominio("www.Wikipedia.org","1","web");

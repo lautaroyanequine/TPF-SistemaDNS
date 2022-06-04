@@ -7,13 +7,13 @@ namespace TPF
 	{
 		
 		private string textoEtiqueta,direccionIP,serviciosQueProvee;
-	
+		
 		private List<ArbolGeneral> hijos = new List<ArbolGeneral>();
 
 		public ArbolGeneral(string textoEtiqueta) {
 			this.textoEtiqueta = textoEtiqueta;
 		}
-	
+		
 		public string getTextoEtiquetaRaiz() {
 			return this.textoEtiqueta;
 		}
@@ -33,24 +33,24 @@ namespace TPF
 		public void setServicios(string dat){
 			this.serviciosQueProvee = dat;
 		}
-	
+		
 		public List<ArbolGeneral> getHijos() {
 			return hijos;
 		}
-	
+		
 		public void agregarHijo(ArbolGeneral hijo) {
 			this.getHijos().Add(hijo);
 		}
-	
+		
 		public void eliminarHijo(ArbolGeneral hijo) {
 			this.getHijos().Remove(hijo);
 		}
-	
+		
 		public bool esHoja() {
 			return this.getHijos().Count == 0;
 		}
 		
-	
+		
 		public int altura() {
 			
 			if(this.esHoja())
@@ -60,7 +60,7 @@ namespace TPF
 				foreach(ArbolGeneral hijo in this.hijos){
 					if(hijo.altura() >altMax)
 						altMax =hijo.altura();
-					}
+				}
 				return altMax + 1;
 			}
 		}
@@ -111,9 +111,9 @@ namespace TPF
 				Console.Write(arbolAux.textoEtiqueta + " ");
 				
 				foreach(var hijo in arbolAux.hijos)
-					c.encolar(hijo);				
-			}			
-		}		
+					c.encolar(hijo);
+			}
+		}
 		
 		public void porNivelesConSeparacion(){
 			Cola c = new Cola();
@@ -134,16 +134,16 @@ namespace TPF
 						nivel++;
 						Console.Write("\nNivel " + nivel + ": ");
 						c.encolar(null);
-					}						
+					}
 				}
 				else{
 					Console.Write(arbolAux.textoEtiqueta + " ");
-				
+					
 					foreach(var hijo in arbolAux.hijos)
 						c.encolar(hijo);
 				}
 			}
-		}		
+		}
 
 		public int ancho(){
 			Cola c = new Cola();
@@ -171,19 +171,19 @@ namespace TPF
 					if(!c.esVacia()){
 						
 						c.encolar(null);
-					}						
+					}
 				}
 				else{
 					
 					//Procesamos
 					contNodos++;
-				
+					
 					foreach(var hijo in arbolAux.hijos)
 						c.encolar(hijo);
 				}
 			}
 			return anc;
-		}		
+		}
 
 		public int nivel(ArbolGeneral arbol ){
 			Cola c = new Cola();
@@ -200,13 +200,13 @@ namespace TPF
 				arbolAux = c.desencolar();
 				
 				if(arbolAux == null){
-										
+					
 					niv++;
 					
 					if(!c.esVacia()){
 						
 						c.encolar(null);
-					}						
+					}
 				}
 				else{
 					
@@ -214,17 +214,17 @@ namespace TPF
 						return niv;
 					}
 
-				
+					
 					foreach(var hijo in arbolAux.hijos)
 						c.encolar(hijo);
 				}
 			}
 			return niv;
-		}			
+		}
 		
 		
 		public void agregarDssominio(string dominio,string i,string ser){
-		
+			
 			
 			string ip= i;
 			string servicio=ser;
@@ -241,7 +241,7 @@ namespace TPF
 //			foreach( ArbolGeneral hijo in this.getHijos())
 //				c.encolar(hijo);
 			c.encolar(this);
-			     
+			
 			c.encolar(null);
 			
 			Console.Write("Nivel " + nivel + ": ");
@@ -267,15 +267,15 @@ namespace TPF
 									arbolAuxPadre.agregarHijo(subDominio);
 									c.encolar(subDominio);
 								}
-							//Esto antes q encole null y suba de nivel
+								//Esto antes q encole null y suba de nivel
 							}
 						}
-					
+						
 						c.encolar(null);
 						nivel++;
 						Console.Write("\nNivel " + nivel + ": ");
 
-					}						
+					}
 				}
 				else{
 //					arbolAuxPadre=arbolAux;
@@ -283,38 +283,38 @@ namespace TPF
 					//Proceso el dato
 					if(nivel>=0 && nivel< valores.Length)
 					{
-					if(string.Compare( arbolAux.textoEtiqueta,valores[nivel]) == 0  )
-					{
-						siExisteEnElNivel=true;
-						siCoincideDominio=true;
-						arbolAuxPadre=arbolAux;
-					}
-					else
-					{
-						siCoincideDominio=false;
+						if(string.Compare( arbolAux.textoEtiqueta,valores[nivel]) == 0  )
+						{
+							siExisteEnElNivel=true;
+							siCoincideDominio=true;
+							arbolAuxPadre=arbolAux;
+						}
+						else
+						{
+							siCoincideDominio=false;
 //						ArbolGeneral subDominio= new ArbolGeneral(valores[nivel]);
 //						arbolAuxPadre.agregarHijo(subDominio);
-					}
-					
+						}
+						
 
 						
-					if(siCoincideDominio)
-					{
-						
+						if(siCoincideDominio)
+						{
+							
 //						foreach(var hijo in arbolAux.hijos)
 //						c.encolar(hijo);
-						if(nivel==valores.Length-1)
-							break;
-						ArbolGeneral subDominio= new ArbolGeneral(valores[nivel+1]);
-						arbolAuxPadre.agregarHijo(subDominio);
-					}
-					
+							if(nivel==valores.Length-1)
+								break;
+							ArbolGeneral subDominio= new ArbolGeneral(valores[nivel+1]);
+							arbolAuxPadre.agregarHijo(subDominio);
+						}
+						
 					}
 					
 					
 					if(this.esHoja()){
 						//Si es hoja agrego el subdominio de mayor importancia directamente ej org.
-					
+						
 						ArbolGeneral subDominio= new ArbolGeneral(valores[nivel+1]);
 						arbolAuxPadre.agregarHijo(subDominio);
 						c.encolar(subDominio);
@@ -324,8 +324,8 @@ namespace TPF
 						foreach(var hijo in arbolAux.hijos)
 							c.encolar(hijo);
 					}
-						
-						
+					
+					
 				}
 			}
 
@@ -360,16 +360,16 @@ namespace TPF
 
 							if(!c.contiene(valores[nivel]) ){ //Chequeo si en el nivel existe el subdominio a agregar
 								//si no existe lo agrego y encolo antes de  encolar el null
-							ArbolGeneral subDominio= new ArbolGeneral(valores[nivel]);
-							arbolAuxPadre.agregarHijo(subDominio);
-							c.encolar(subDominio);
+								ArbolGeneral subDominio= new ArbolGeneral(valores[nivel]);
+								arbolAuxPadre.agregarHijo(subDominio);
+								c.encolar(subDominio);
 							}
 						}
-					
-					
+						
+						
 						Console.Write("\nNivel " + nivel + ": ");
 						c.encolar(null);
-					}						
+					}
 				}
 				else{
 					
@@ -378,8 +378,8 @@ namespace TPF
 					{
 						if(string.Compare( arbolAux.textoEtiqueta,valores[nivel]) == 0  ) //Si en el nivel existe el subdominio
 						{
-					
-							siCoincideDominio=true; 
+							
+							siCoincideDominio=true;
 							arbolAuxPadre=arbolAux; //Pasa a ser el padre,ya que el proximo subdominio se le asignara a este
 						}
 						else
@@ -409,9 +409,9 @@ namespace TPF
 						}
 						if(!auxiliar){
 							//En caso q no tenga el subdominio lo agrego
-						ArbolGeneral subDominio= new ArbolGeneral(valores[nivel+1]);
-						arbolAuxPadre.agregarHijo(subDominio);
-					
+							ArbolGeneral subDominio= new ArbolGeneral(valores[nivel+1]);
+							arbolAuxPadre.agregarHijo(subDominio);
+							
 						}
 					}
 					if(arbolAux.esHoja())
@@ -422,7 +422,7 @@ namespace TPF
 							arbolAux.setDireccionIP(ip);
 							arbolAux.setServicios(servicio);
 							Console.WriteLine(arbolAux.getDireccionIP());
-								break;
+							break;
 						}
 						
 						ArbolGeneral subDominio= new ArbolGeneral(valores[nivel+1]);
@@ -444,10 +444,138 @@ namespace TPF
 						}
 						
 					}
-		
+					
 				}
 			}
-		}		
+		}
+		
+		
+//		1. Dado un nombre de dominio correspondiente a un equipo imprimir su dirección IP
+		//junto con los servicios que provee.
+		
+		
+		public void devolverIpyServicios(string dominio){
+			
+//			string ip= " ";
+//			string servicio="";
+			string[] valores= dominio.Split('.');
+			Array.Reverse(valores); //Doy vuelta los valores del array para que coincidan los niveles con los indices.
+		
+			bool siCoincideDominio=false;
+			Cola c = new Cola();
+			ArbolGeneral arbolAux,arbolAuxPadre=this;
+			int nivel = -1;
+			
+			
+			
+			c.encolar(this);
+			c.encolar(null);
+			
+			
+			while(!c.esVacia()){
+				arbolAux = c.desencolar();
+				
+				if(arbolAux == null){
+					if(!c.esVacia()){
+						nivel++;
+//						if(nivel>=0) //Si no es la raiz
+//						{
+//
+//							if(!c.contiene(valores[nivel]) ){ //Chequeo si en el nivel existe el subdominio a agregar
+//								//si no existe lo agrego y encolo antes de  encolar el null
+//								ArbolGeneral subDominio= new ArbolGeneral(valores[nivel]);
+//								arbolAuxPadre.agregarHijo(subDominio);
+//								c.encolar(subDominio);
+//							}
+//						}
+						
+						
+						Console.Write("\nNivel " + nivel + ": ");
+						c.encolar(null);
+					}
+				}
+				else{
+					
+					//Proceso el dato
+					if(nivel>=0 && nivel< valores.Length) //Se aseguro que no compare la rai y que nivel no sea mayor a la longitud del array valores
+					{
+						if(string.Compare( arbolAux.textoEtiqueta,valores[nivel]) == 0  ) //Si en el nivel existe el subdominio
+						{
+							
+							siCoincideDominio=true;
+							arbolAuxPadre=arbolAux; //Pasa a ser el padre,ya que el proximo subdominio se le asignara a este
+						}
+						else
+							siCoincideDominio=false;
+					}
+					
+					//Si el subdominio ya existe
+					
+//					if(siCoincideDominio)
+//					{
+//						bool auxiliar=false;
+//						if(nivel>=valores.Length-1 ) //Si no es la ultima posicion del array,ejemplo si es www,no se le puede agregar un subdominio
+//						{
+////							arbolAux.setDireccionIP(ip);
+////							arbolAux.setServicios(servicio);
+////							Console.WriteLine(arbolAux.getDireccionIP());
+//							break;
+//						};
+//						//Recorro los subdominios del padre para chequear si ya tiene ese subdominio o no
+//						List<ArbolGeneral> hijos= arbolAuxPadre.getHijos();
+//						foreach(ArbolGeneral ar in hijos)
+//						{
+//							if(ar.getTextoEtiquetaRaiz()==valores[nivel+1]){
+//								auxiliar=true;
+//								break;}
+//							
+//						}
+//						if(!auxiliar){
+//							//En caso q no tenga el subdominio lo agrego
+//							ArbolGeneral subDominio= new ArbolGeneral(valores[nivel+1]);
+//							arbolAuxPadre.agregarHijo(subDominio);
+//							
+//						}
+//					}
+//					if(arbolAux.esHoja())
+//					{
+//						//Si es hoja no hace falta ver si existe el subdominio a agregar,se lo agrega directamente
+//						if(nivel>=valores.Length-1 ) //Si no es la ultima posicion del array,ejemplo si es www,no se le puede agregar un subdominio
+//						{
+//							arbolAux.setDireccionIP(ip);
+//							arbolAux.setServicios(servicio);
+//							Console.WriteLine(arbolAux.getDireccionIP());
+//							break;
+//						}
+//						
+//						ArbolGeneral subDominio= new ArbolGeneral(valores[nivel+1]);
+//						arbolAuxPadre.agregarHijo(subDominio);
+//						c.encolar(subDominio);
+//						
+//					}
+//					else{
+						if(nivel==-1) //Me aseguro que agregue los hijos de la raiz<
+						{
+							
+							foreach(var hijo in arbolAux.hijos)
+								c.encolar(hijo);
+						}
+						else
+							if(siCoincideDominio){// Encolo solo los subdominios correspondientes para que no haya problema de ejecucion.
+							foreach(var hijo in arbolAux.hijos)
+								c.encolar(hijo);
+//						}
+						
+					}
+					
+				}
+			}
+			if(valores[valores.Length-1]==arbolAuxPadre.getTextoEtiquetaRaiz())
+				Console.WriteLine(arbolAuxPadre.getDireccionIP());
+			else
+				Console.WriteLine("NO SE ENCUENTRA IP");
+			
+		}
 		
 		/*
 		 1. Encolar raiz y null
@@ -462,5 +590,5 @@ namespace TPF
 
 	}
 	
-		
+	
 }
