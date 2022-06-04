@@ -22,16 +22,16 @@ namespace TPF
 		}
 
 		public string getDireccionIP() {
-			return this.textoEtiqueta;
+			return this.direccionIP;
 		}
 		public void setDireccionIP(string dat){
-			this.textoEtiqueta = dat;
+			this.direccionIP = dat;
 		}
 		public string getServicios() {
-			return this.textoEtiqueta;
+			return this.serviciosQueProvee;
 		}
 		public void setServicios(string dat){
-			this.textoEtiqueta = dat;
+			this.serviciosQueProvee = dat;
 		}
 	
 		public List<ArbolGeneral> getHijos() {
@@ -337,8 +337,8 @@ namespace TPF
 			string ip= i;
 			string servicio=ser;
 			string[] valores= dominio.Split('.');
-			Array.Reverse(valores);
-			bool siExisteEnElNivel=false,siCoincideDominio=false;
+			Array.Reverse(valores); //Doy vuelta los valores del array para que coincidan los niveles con los indices.
+			bool siCoincideDominio=false;
 			Cola c = new Cola();
 			ArbolGeneral arbolAux,arbolAuxPadre=this;
 			int nivel = -1;
@@ -348,7 +348,6 @@ namespace TPF
 			c.encolar(this);
 			c.encolar(null);
 			
-			Console.Write("Nivel " + nivel + ": ");
 			
 			while(!c.esVacia()){
 				arbolAux = c.desencolar();
@@ -356,10 +355,11 @@ namespace TPF
 				if(arbolAux == null){
 					if(!c.esVacia()){
 						nivel++;
-						if(nivel>=0)
+						if(nivel>=0) //Si no es la raiz
 						{
 
-							if(!c.contiene(valores[nivel]) ){
+							if(!c.contiene(valores[nivel]) ){ //Chequeo si en el nivel existe el subdominio a agregar
+								//si no existe lo agrego y encolo antes de  encolar el null
 							ArbolGeneral subDominio= new ArbolGeneral(valores[nivel]);
 							arbolAuxPadre.agregarHijo(subDominio);
 							c.encolar(subDominio);
@@ -374,13 +374,13 @@ namespace TPF
 				else{
 					
 					//Proceso el dato
-					if(nivel>=0 && nivel< valores.Length)
+					if(nivel>=0 && nivel< valores.Length) //Se aseguro que no compare la rai y que nivel no sea mayor a la longitud del array valores
 					{
-						if(string.Compare( arbolAux.textoEtiqueta,valores[nivel]) == 0  )
+						if(string.Compare( arbolAux.textoEtiqueta,valores[nivel]) == 0  ) //Si en el nivel existe el subdominio
 						{
-							siExisteEnElNivel=true;
-							siCoincideDominio=true;
-							arbolAuxPadre=arbolAux;
+					
+							siCoincideDominio=true; 
+							arbolAuxPadre=arbolAux; //Pasa a ser el padre,ya que el proximo subdominio se le asignara a este
 						}
 						else
 							siCoincideDominio=false;
@@ -391,9 +391,14 @@ namespace TPF
 					if(siCoincideDominio)
 					{
 						bool auxiliar=false;
-						if(nivel>=valores.Length-1)
+						if(nivel>=valores.Length-1 ) //Si no es la ultima posicion del array,ejemplo si es www,no se le puede agregar un subdominio
+						{
+							arbolAux.setDireccionIP(ip);
+							arbolAux.setServicios(servicio);
+							Console.WriteLine(arbolAux.getDireccionIP());
 							break;
-						//Agregar verificacionsi ya existe sigueinte subdominio
+						};
+						//Recorro los subdominios del padre para chequear si ya tiene ese subdominio o no
 						List<ArbolGeneral> hijos= arbolAuxPadre.getHijos();
 						foreach(ArbolGeneral ar in hijos)
 						{
@@ -403,19 +408,27 @@ namespace TPF
 							
 						}
 						if(!auxiliar){
+							//En caso q no tenga el subdominio lo agrego
 						ArbolGeneral subDominio= new ArbolGeneral(valores[nivel+1]);
 						arbolAuxPadre.agregarHijo(subDominio);
-						siExisteEnElNivel=true;
+					
 						}
 					}
 					if(arbolAux.esHoja())
 					{
-						if(nivel>=valores.Length-1 )
-							break;
+						//Si es hoja no hace falta ver si existe el subdominio a agregar,se lo agrega directamente
+						if(nivel>=valores.Length-1 ) //Si no es la ultima posicion del array,ejemplo si es www,no se le puede agregar un subdominio
+						{
+							arbolAux.setDireccionIP(ip);
+							arbolAux.setServicios(servicio);
+							Console.WriteLine(arbolAux.getDireccionIP());
+								break;
+						}
+						
 						ArbolGeneral subDominio= new ArbolGeneral(valores[nivel+1]);
 						arbolAuxPadre.agregarHijo(subDominio);
 						c.encolar(subDominio);
-						siExisteEnElNivel=true;
+						
 					}
 					else{
 						if(nivel==-1) //Me aseguro que agregue los hijos de la raiz<
