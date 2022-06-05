@@ -633,6 +633,60 @@ namespace TPF
 				Console.WriteLine(url);
 			}
 		}
+		
+		
+		
+//		Dada una profundidad imprimir las cantidades de dominios de nivel superior,
+//subdominios y equipos ubicados a dicha profundidad.
+
+		public void profundidadNodos(int profundidad){
+			Cola c = new Cola();
+			ArbolGeneral arbolAux;
+			int cantAntes=0,cantProfundidad=0;
+			
+			int nivel = 0;
+			
+			c.encolar(this);
+			c.encolar(null);
+			
+			Console.Write("Nivel " + nivel + ": ");
+			
+			while(!c.esVacia() ){
+				
+				if(nivel>profundidad)
+					break;
+				arbolAux = c.desencolar();
+				
+				if(arbolAux == null){
+					if(!c.esVacia()){
+						nivel++;
+						
+						Console.Write("\nNivel " + nivel + ": ");
+						c.encolar(null);
+					}
+				}
+				else{
+					if(nivel==profundidad)
+					{
+						cantProfundidad++;
+					}
+					else{
+						if(nivel !=0)
+							cantAntes++;
+					}
+						
+					
+					foreach(var hijo in arbolAux.hijos)
+						c.encolar(hijo);
+				}
+				
+				
+			}
+			
+			Console.WriteLine("Cantidad de dominios de nivel superior: "+cantAntes);
+			Console.WriteLine("Cantidad de dominios de profundidad "+profundidad.ToString()+": "+cantProfundidad);
+		}
+
 
 
 

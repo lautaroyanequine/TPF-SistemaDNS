@@ -44,6 +44,7 @@ namespace TPF
 //			Console.WriteLine(")");
 //			Console.WriteLine(DNS.ancho());
 			DNS.imprimirSubdominios("ONU88e");
+			DNS.profundidadNodos(3);
 			
 //			DNS.devolverIpyServicios("www.google.com");
 //			
