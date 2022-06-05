@@ -176,6 +176,7 @@ namespace TPF
 				else{
 					
 					//Procesamos
+					if(arbolAux.esHoja())
 					contNodos++;
 					
 					foreach(var hijo in arbolAux.hijos)
@@ -222,114 +223,6 @@ namespace TPF
 			return niv;
 		}
 		
-		
-		public void agregarDssominio(string dominio,string i,string ser){
-			
-			
-			string ip= i;
-			string servicio=ser;
-			string[] valores= dominio.Split('.');
-			Array.Reverse(valores);
-			bool siExisteEnElNivel=false,siCoincideDominio=false;
-			Cola c = new Cola();
-			ArbolGeneral arbolAux,arbolAuxPadre=this;
-			int nivel = -1;
-			
-			
-			
-			//Encolo directamente los hijos,ya que el nodo raiz no tiene dato valido
-//			foreach( ArbolGeneral hijo in this.getHijos())
-//				c.encolar(hijo);
-			c.encolar(this);
-			
-			c.encolar(null);
-			
-			Console.Write("Nivel " + nivel + ": ");
-			
-			while(!c.esVacia()){
-				arbolAux = c.desencolar();
-				
-				
-				if(arbolAux == null)
-				{
-					if(!c.esVacia()){
-						if( nivel< valores.Length){
-							if(!siExisteEnElNivel)
-							{
-								if(nivel == -1)
-								{
-									ArbolGeneral subDominio= new ArbolGeneral(valores[nivel+1]);
-									arbolAuxPadre.agregarHijo(subDominio);
-									c.encolar(subDominio);
-								}
-								else{
-									ArbolGeneral subDominio= new ArbolGeneral(valores[nivel]);
-									arbolAuxPadre.agregarHijo(subDominio);
-									c.encolar(subDominio);
-								}
-								//Esto antes q encole null y suba de nivel
-							}
-						}
-						
-						c.encolar(null);
-						nivel++;
-						Console.Write("\nNivel " + nivel + ": ");
-
-					}
-				}
-				else{
-//					arbolAuxPadre=arbolAux;
-					
-					//Proceso el dato
-					if(nivel>=0 && nivel< valores.Length)
-					{
-						if(string.Compare( arbolAux.textoEtiqueta,valores[nivel]) == 0  )
-						{
-							siExisteEnElNivel=true;
-							siCoincideDominio=true;
-							arbolAuxPadre=arbolAux;
-						}
-						else
-						{
-							siCoincideDominio=false;
-//						ArbolGeneral subDominio= new ArbolGeneral(valores[nivel]);
-//						arbolAuxPadre.agregarHijo(subDominio);
-						}
-						
-
-						
-						if(siCoincideDominio)
-						{
-							
-//						foreach(var hijo in arbolAux.hijos)
-//						c.encolar(hijo);
-							if(nivel==valores.Length-1)
-								break;
-							ArbolGeneral subDominio= new ArbolGeneral(valores[nivel+1]);
-							arbolAuxPadre.agregarHijo(subDominio);
-						}
-						
-					}
-					
-					
-					if(this.esHoja()){
-						//Si es hoja agrego el subdominio de mayor importancia directamente ej org.
-						
-						ArbolGeneral subDominio= new ArbolGeneral(valores[nivel+1]);
-						arbolAuxPadre.agregarHijo(subDominio);
-						c.encolar(subDominio);
-						siExisteEnElNivel=true;
-					}
-					else{
-						foreach(var hijo in arbolAux.hijos)
-							c.encolar(hijo);
-					}
-					
-					
-				}
-			}
-
-		}
 		
 		
 		public void agregarDominio(string dominio,string i,string ser){
@@ -456,8 +349,6 @@ namespace TPF
 		
 		public void devolverIpyServicios(string dominio){
 			
-//			string ip= " ";
-//			string servicio="";
 			string[] valores= dominio.Split('.');
 			Array.Reverse(valores); //Doy vuelta los valores del array para que coincidan los niveles con los indices.
 		
@@ -478,19 +369,6 @@ namespace TPF
 				if(arbolAux == null){
 					if(!c.esVacia()){
 						nivel++;
-//						if(nivel>=0) //Si no es la raiz
-//						{
-//
-//							if(!c.contiene(valores[nivel]) ){ //Chequeo si en el nivel existe el subdominio a agregar
-//								//si no existe lo agrego y encolo antes de  encolar el null
-//								ArbolGeneral subDominio= new ArbolGeneral(valores[nivel]);
-//								arbolAuxPadre.agregarHijo(subDominio);
-//								c.encolar(subDominio);
-//							}
-//						}
-						
-						
-						Console.Write("\nNivel " + nivel + ": ");
 						c.encolar(null);
 					}
 				}
@@ -509,51 +387,7 @@ namespace TPF
 							siCoincideDominio=false;
 					}
 					
-					//Si el subdominio ya existe
 					
-//					if(siCoincideDominio)
-//					{
-//						bool auxiliar=false;
-//						if(nivel>=valores.Length-1 ) //Si no es la ultima posicion del array,ejemplo si es www,no se le puede agregar un subdominio
-//						{
-////							arbolAux.setDireccionIP(ip);
-////							arbolAux.setServicios(servicio);
-////							Console.WriteLine(arbolAux.getDireccionIP());
-//							break;
-//						};
-//						//Recorro los subdominios del padre para chequear si ya tiene ese subdominio o no
-//						List<ArbolGeneral> hijos= arbolAuxPadre.getHijos();
-//						foreach(ArbolGeneral ar in hijos)
-//						{
-//							if(ar.getTextoEtiquetaRaiz()==valores[nivel+1]){
-//								auxiliar=true;
-//								break;}
-//							
-//						}
-//						if(!auxiliar){
-//							//En caso q no tenga el subdominio lo agrego
-//							ArbolGeneral subDominio= new ArbolGeneral(valores[nivel+1]);
-//							arbolAuxPadre.agregarHijo(subDominio);
-//							
-//						}
-//					}
-//					if(arbolAux.esHoja())
-//					{
-//						//Si es hoja no hace falta ver si existe el subdominio a agregar,se lo agrega directamente
-//						if(nivel>=valores.Length-1 ) //Si no es la ultima posicion del array,ejemplo si es www,no se le puede agregar un subdominio
-//						{
-//							arbolAux.setDireccionIP(ip);
-//							arbolAux.setServicios(servicio);
-//							Console.WriteLine(arbolAux.getDireccionIP());
-//							break;
-//						}
-//						
-//						ArbolGeneral subDominio= new ArbolGeneral(valores[nivel+1]);
-//						arbolAuxPadre.agregarHijo(subDominio);
-//						c.encolar(subDominio);
-//						
-//					}
-//					else{
 						if(nivel==-1) //Me aseguro que agregue los hijos de la raiz<
 						{
 							
@@ -564,7 +398,7 @@ namespace TPF
 							if(siCoincideDominio){// Encolo solo los subdominios correspondientes para que no haya problema de ejecucion.
 							foreach(var hijo in arbolAux.hijos)
 								c.encolar(hijo);
-//						}
+
 						
 					}
 					
@@ -586,6 +420,220 @@ namespace TPF
 		 
 		 
 		 */
+		
+//		Eliminación de nombres de equipos, verificando que no queden subdominios o
+//dominios de nivel superior vacíos (sin hijos) producto de la eliminación. En los casos
+//donde se detecten subdominios o dominios de nivel superior vacíos, estos deberán
+//ser eliminados de la estructura de dato
+
+		public void eliminarUrl(string dominio){
+	
+			string[] valores= dominio.Split('.');
+			Array.Reverse(valores); //Doy vuelta los valores del array para que coincidan los niveles con los indices.
+			ArbolGeneral[] aEliminar= new ArbolGeneral[(valores.Length+1)];
+			aEliminar[0]=this;
+			bool siCoincideDominio=false;
+			Cola c = new Cola();
+			ArbolGeneral arbolAux,arbolAuxPadre=this;
+			int nivel = -1;
+			
+			
+			
+			c.encolar(this);
+			c.encolar(null);
+			
+			
+			while(!c.esVacia()){
+				arbolAux = c.desencolar();
+				
+				if(arbolAux == null){
+					if(!c.esVacia()){
+						nivel++;
+						c.encolar(null);
+					}
+				}
+				else{
+					
+					//Proceso el dato
+					if(nivel>=0 && nivel< valores.Length) //Se aseguro que no compare la rai y que nivel no sea mayor a la longitud del array valores
+					{
+						if(string.Compare( arbolAux.textoEtiqueta,valores[nivel]) == 0  ) //Si en el nivel existe el subdominio
+						{
+							
+							siCoincideDominio=true;
+							arbolAuxPadre=arbolAux; //Pasa a ser el padre,ya que el proximo subdominio se le asignara a este
+							aEliminar[nivel+1]=arbolAuxPadre;
+						}
+						else
+							siCoincideDominio=false;
+					}
+					
+					
+						if(nivel==-1) //Me aseguro que agregue los hijos de la raiz<
+						{
+							
+							foreach(var hijo in arbolAux.hijos)
+								c.encolar(hijo);
+						}
+						else
+							if(siCoincideDominio){// Encolo solo los subdominios correspondientes para que no haya problema de ejecucion.
+							foreach(var hijo in arbolAux.hijos)
+								c.encolar(hijo);
+
+						
+					}
+					
+				}
+			}
+			Array.Reverse( aEliminar);
+//			aEliminar[aEliminar.Length-1]=this;
+		
+			for (int i = 0; i < aEliminar.Length; i++) {
+				
+				if(aEliminar[i].esHoja())
+					aEliminar[i+1].eliminarHijo(aEliminar[i]);
+			}
+
+		}
+		
+//		
+//		 Dado un nombre de dominio correspondiente a un subdominio imprimir todos los
+//nombres de los equipos que de él dependen
+
+		public void imprimirSubdominios(string subdominio)
+		{
+//			string[] valores= dominio.Split('.');
+//			Array.Reverse(valores); //Doy vuelta los valores del array para que coincidan los niveles con los indices.
+//			
+			List <ArbolGeneral> subdominios= new List<ArbolGeneral>();
+			bool siCoincideDominio=false;
+			Cola c = new Cola();
+			ArbolGeneral arbolAux,arbolAuxPadre=this;
+			int nivel = -1;
+			
+			
+			
+			c.encolar(this);
+			c.encolar(null);
+			
+			
+			while(!c.esVacia()){
+				arbolAux = c.desencolar();
+				
+				if(arbolAux == null){
+					if(!c.esVacia()){
+						nivel++;
+						c.encolar(null);
+					}
+				}
+				else{
+					
+					//Proceso el dato
+					if(nivel>=0 ) //Se aseguro que no compare la rai y que nivel no sea mayor a la longitud del array valores
+					{
+						if(string.Compare( arbolAux.textoEtiqueta,subdominio) == 0)   //Si en el nivel existe el subdominio
+						{
+							
+							siCoincideDominio=true;
+							arbolAuxPadre=arbolAux; //Pasa a ser el padre,ya que el proximo subdominio se le asignara a este
+							break;
+							
+						}
+						
+					}
+					
+					
+						if(nivel==-1) //Me aseguro que agregue los hijos de la raiz<
+						{
+							
+							foreach(var hijo in arbolAux.hijos)
+								c.encolar(hijo);
+						}
+						else
+							// Encolo solo los subdominios correspondientes para que no haya problema de ejecucion.
+							foreach(var hijo in arbolAux.hijos)
+								c.encolar(hijo);
+
+						
+					
+					
+				}
+			}
+			if(siCoincideDominio)
+				_imprimirsub(arbolAuxPadre);
+		}
+		
+		
+		public void _imprimirsub(ArbolGeneral arbol){
+			int cantUrls= arbol.ancho();
+
+			Pila[] Urls = new Pila [cantUrls];
+			for (int i = 0; i < Urls.Length; i++) {
+				Urls[i]=new Pila();
+				Urls[i].apilar(arbol);
+			}
+			
+			int contPila=0;
+			Cola c = new Cola();
+			ArbolGeneral arbolAux;
+			
+			int nivel = 0;
+			
+			c.encolar(arbol);
+			c.encolar(null);
+			
+			Console.Write("Nivel " + nivel + ": ");
+			
+			while(!c.esVacia()){
+				arbolAux = c.desencolar();
+				
+				if(arbolAux == null){
+					if(!c.esVacia()){
+						nivel++;
+						contPila=0;
+						Console.Write("\nNivel " + nivel + ": ");
+						c.encolar(null);
+					}
+				}
+				else{
+					if(!arbolAux.esHoja() && nivel !=0){
+						int cantHijos= arbolAux.getHijos().Count;
+						for (int i = 0; i < cantHijos; i++) {
+							Urls[contPila].apilar(arbolAux);
+							contPila++;
+						}
+						
+					}
+					else{
+						if(nivel !=0){
+						Urls[contPila].apilar(arbolAux);
+						contPila++;}
+					}
+					
+					foreach(var hijo in arbolAux.hijos)
+						c.encolar(hijo);
+				}
+
+			
+			
+		}
+			Console.WriteLine("");
+			for (int i = 0; i < Urls.Length; i++) {
+				string url="";
+				while(!Urls[i].vacia()){
+					ArbolGeneral aux= Urls[i].desapilar();
+					string aux2= aux.getTextoEtiquetaRaiz();
+					if(!Urls[i].vacia())
+					url+=aux2+".";
+					else
+						url+=aux2;
+				}
+				
+			
+				Console.WriteLine(url);
+			}
+		}
+
 
 
 	}

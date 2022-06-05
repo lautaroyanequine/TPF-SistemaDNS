@@ -11,6 +11,9 @@ namespace TPF
 		
 		private List<ArbolGeneral> datos = new List<ArbolGeneral>();
 	
+		public List<ArbolGeneral> Datos{
+			get{return datos;}
+		}
 		public void encolar(ArbolGeneral elem) {
 			this.datos.Add(elem);
 		}
