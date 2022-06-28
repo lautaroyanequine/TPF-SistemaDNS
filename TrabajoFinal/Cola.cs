@@ -28,7 +28,7 @@ namespace TPF
 			return this.datos[0]; 
 		}
 		
-			public bool esVacia() {
+		public bool esVacia() {
 				return this.datos.Count == 0;
 			}
 		

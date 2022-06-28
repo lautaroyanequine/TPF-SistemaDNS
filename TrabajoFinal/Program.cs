@@ -16,9 +16,9 @@ namespace TPF
 		{
 			Console.WriteLine("Hello World!");
 			
-			ArbolGeneral DNS = new ArbolGeneral("");
-			
-			Menu(DNS);
+			ArbolGeneral DNS = new ArbolGeneral("",null);
+//			
+//			Menu(DNS);
 			
 //			string prueba= "www.wikipedia.org";
 //			string ip= "192.168.0.0.";
@@ -34,23 +34,33 @@ namespace TPF
 //			ArbolGeneral a= new ArbolGeneral( valores[0]);
 //			ArbolGeneral b= new ArbolGeneral( valores[1]);
 //			ArbolGeneral c= new ArbolGeneral( valores[2]);
-//			DNS.agregarDominio("www.Wikipedia.org","1","web");
-//			DNS.agregarDominio("www.ONU.org","2","web");
-//			DNS.agregarDominio("wwew.ONU.org","2","web");
-//			DNS.agregarDominio("wweweee.ONU.org","2","web");
-////			DNS.agregarDominio("wwe.google.com","3","web");
-////			DNS.agregarDominio("ar.facebook.com","4","web");
-////			DNS.agregarDominio("www.google.com","5","web");
-////			DNS.porNiveles();
-//////						DNS.imprimirSubdominios("org");
-////			Console.WriteLine(")");
-////			Console.WriteLine(DNS.ancho());
-//			DNS.imprimirSubdominios("ONU88e");
-//			DNS.profundidadNodos(3);
-//			
-////			DNS.devolverIpyServicios("www.google.com");
-////			
-////			DNS.eliminarUrl("www.google.com");
+			DNS.agregarDominio("www.facebook.com","1","web");
+						DNS.agregarDominio("www.google.com","1","web");
+			DNS.agregarDominio("wwe.facebook.com","2","web");
+			DNS.agregarDominio("wwe.es.facebook.com","2","web");
+			DNS.agregarDominio("www.facebook.org","3","web");
+			DNS.eliminarUrl("www");
+			DNS.devolverIpyServicios("www.facebook.org");
+//			DNS.agregarDominio("www.es.facebook.com","1","web");
+//						DNS.agregarDominio("www.edds.facebook.com","1","web");
+//									DNS.agregarDominio("www.es.river.facebook.com","1","web");
+//			DNS.agregarDominio("www.google.com","2","web");
+//			DNS.agregarDominio("wwee.facebook.org","1","web");
+//			DNS.agregarDominio("www.google.org","1","web");
+			DNS.porNivelesConSeparacion();
+//			DNS.eliminarUrl("com");
+//			Console.WriteLine("s");
+//			DNS.porNivelesConSeparacion();
+////			DNS.agregarDominio("www.Wikipedia.com","1","web");
+//						DNS.porNivelesConSeparacion();
+//						Console.WriteLine("------------------ ");
+////						DNS.eliminarUrl("com");
+//						DNS.imprimirSubdominios("facebook");
+//						DNS.eliminarUrl("es");
+////												DNS.eliminarUrl("www.es.Wikipedia.com");
+//						Console.WriteLine("sin nada");
+//												DNS.imprimirSubdominios("facebook");
+//												DNS.porNivelesConSeparacion();
 ////						DNS.porNivelesConSeparacion();
 ////						DNS.devolverIpyServicios("www.google.com");
 //			
@@ -92,10 +102,7 @@ namespace TPF
 			Console.ReadKey(true);
 		}
 		
-		
-		
-		
-		
+
 		public static void Menu(ArbolGeneral DNS)
 		{
 			Console.WriteLine("BIENVENIDOS Al SISTEMA DNS ");
@@ -105,6 +112,7 @@ namespace TPF
 			
 			
 			do{
+
 				Console.Write("\n1. Ingresar a Administración " +
 				              "\n2. Ingresar a Consultas." +
 				              "\n0. Salir\nIngrese una opción: ");
@@ -127,7 +135,7 @@ namespace TPF
 							do{
 								
 							
-							
+								Console.Clear();
 								Console.Write("\n1. Ingreso y almacenamiento de nombres de dominio correspondientes a equipos conectado a la red " +
 								              "\n2. Eliminación de nombres de equipos." +
 								              "\n0. Volver al menu principal" +
@@ -146,11 +154,28 @@ namespace TPF
 										switch(opcion)
 										{
 											case 1: 
-												{ // Metodo agregar
+												{ 
+													
+													
+													Console.WriteLine("Proceda a ingresar los datos  para agregar el equipo a la red");
+													Console.Write("Ingrese el dominio ej.'www.Wikipedia.org': ");
+													string dominio = Console.ReadLine();
+													Console.Write("Direccion IP : ");
+													string ip = Console.ReadLine();
+													Console.Write("Servicio que provee (WWW | FTP | DNS | ROUTING ) : ");
+													string servicio = Console.ReadLine();
+													
+												
+													ArbolGeneral nuevoDominio =new ArbolGeneral(dominio,null);
+													DNS.agregarDominio(dominio,ip,servicio);
 													break;
 												}
 											case 2:
 												{//Metodo eliminar
+													Console.WriteLine("Ingrese el dominio o subdominio a eliminar: ");
+													string dominio= Console.ReadLine();
+													DNS.eliminarUrl(dominio);
+													Console.ReadKey(true);
 													break;
 												}
 											case 0 : break;
@@ -178,8 +203,7 @@ namespace TPF
 						case 2:{
 							do{
 								
-//				
-								
+								Console.Clear();
 								Console.Write("\n1.Ingreso el nombre del dominio para ver su direccion IP y los servicios que provee. " +
 								              "\n2. Ingrese un subdominio para ver todos los equipos que dependen de él" +
 								              "\n3. Ingrese una profundidad para ver  las cantidades de dominios de nivel superior, subdominios y equipos ubicados a dicha profundidad."+
@@ -200,15 +224,27 @@ namespace TPF
 										{
 											case 1:
 												{ // Metodo ver ip y servicio
+													Console.WriteLine("Ingrese el dominio que necesite ver su direccion IP y los servicios que proveé: ");
+													string dominio= Console.ReadLine();
+													DNS.devolverIpyServicios(dominio);
+													Console.ReadKey(true);
 													break;
 												}
 											case 2:
 												{//Metodo ver subdominios dependientes
+													Console.WriteLine("Ingrese un subdominio para ver todos los equipos que dependen de él: ");
+													string dominio= Console.ReadLine();
+													DNS.imprimirSubdominios(dominio);
+													Console.ReadKey(true);
 													break;
 												}
 											case 3:
 												{
 													//metodo profundidad
+													Console.WriteLine("Ingrese la profundidad para ver las cantidades de dominios de nivel superior,subdominios y equipos ubicados a dicha profundidad: ");
+													int dominio= int.Parse(Console.ReadLine());
+													DNS.profundidadNodos(dominio);
+													Console.ReadKey(true);
 													break;
 												}
 												
@@ -249,7 +285,7 @@ namespace TPF
 			
 			Console.WriteLine();
 		
-			Console.WriteLine("Fin del progrma,muchas gracias!!");
+			Console.WriteLine("Fin del progrma");
 			
 		}
 		
