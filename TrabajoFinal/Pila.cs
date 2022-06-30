@@ -19,13 +19,8 @@ namespace TPF
 	{
 		private List<ArbolGeneral> elementos = new List<ArbolGeneral>();
 		
-		public List<ArbolGeneral> Elementos{
-			get{return elementos;}
-		}
-		public void apilar(ArbolGeneral elem)   
-		{
-			elementos.Add(elem);
-		}
+		public List<ArbolGeneral> Elementos{get{return elementos;}}
+		public void apilar(ArbolGeneral elem) {elementos.Add(elem);}
 		public ArbolGeneral desapilar()
 		{
 			ArbolGeneral aux;
@@ -34,10 +29,7 @@ namespace TPF
 			elementos.Remove(aux);
 			return aux;
 		}
-		public bool vacia()
-		{
-			return elementos.Count==0;
-		}
+		public bool vacia()	{return elementos.Count==0;}
 		public ArbolGeneral tope()
 		{
 			int tam=elementos.Count;

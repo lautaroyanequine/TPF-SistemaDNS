@@ -85,7 +85,6 @@ namespace TPF
 
 		
 		public void agregarDominio(string dominio,string i,string ser){
-			
 			string ip= i,servicio=ser;
 			string[] valores= dominio.Split('.'); //Separo el string en partes por el "."
 			Array.Reverse(valores); //Doy vuelta los valores del array para que coincidan los niveles con los indices.
@@ -135,7 +134,7 @@ namespace TPF
 						}
 						//Recorro los subdominios del padre para chequear si ya tiene ese subdominio o no
 						List<ArbolGeneral> hijos= arbolAuxPadre.getHijos();
-						foreach(ArbolGeneral ar in hijos)
+						foreach(ArbolGeneral ar in hijos)     //Chequea si el propio nodo tiene el proximo elemento a agregar
 						{
 							if(ar.getTextoEtiquetaRaiz()==valores[nivel+1])
 								auxiliar=true;
@@ -148,7 +147,7 @@ namespace TPF
 					
 					if(arbolAux.esHoja()) 					//Caso si el subdominio es hoja
 					{
-						
+							bool auxiliar=false;
 						if(nivel>=valores.Length-1 ) //Si es la ultima posicion le agrego los datos IP y servicios
 						{
 							if(string.Compare(valores[nivel],arbolAux.getTextoEtiquetaRaiz())==0){
@@ -158,10 +157,10 @@ namespace TPF
 						}
 						//Si no es la ultima posicion,chequeo si el proximo subdominio a agregar ya existe.Si existe no lo agrego
 						List<ArbolGeneral> hijos= arbolAuxPadre.getHijos();
-						bool auxiliar=false;
+						
 						foreach(ArbolGeneral ar in hijos)
 						{
-							if(nivel<valores.Length-1){
+							if(nivel<valores.Length-1){     //Chequeo si el padre de la hoja ya lo tiene agregado
 							if(ar.getTextoEtiquetaRaiz()==valores[nivel+1])
 								auxiliar=true;
 							}
@@ -408,7 +407,6 @@ namespace TPF
 
 	public void imprimirSubdominios(string subdominio)
 		{
-
 			List <ArbolGeneral> subdominios= new List<ArbolGeneral>();
 			Cola c = new Cola();
 			ArbolGeneral arbolAux,arbolAuxPadre=this;
@@ -429,10 +427,8 @@ namespace TPF
 						if(string.Compare( arbolAux.textoEtiqueta,subdominio) == 0)
 						{
 							arbolAuxPadre=arbolAux; //Pasa a ser el padre,ya que el proximo subdominio se le asignara a este
-							_imprimirSubdominios(arbolAuxPadre);  //Cada vez q encuentre el subdominio veo los subdominios que depedne de el
-							
-						}
-						
+							_imprimirSubdominios(arbolAuxPadre);  //Cada vez q encuentre el subdominio veo los subdominios que depedne de el			
+						}		
 					}
 					
 					if(nivel==-1)
@@ -441,17 +437,45 @@ namespace TPF
 					}
 					else
 						foreach(var hijo in arbolAux.hijos)
-							c.encolar(hijo);
-					
+							c.encolar(hijo);	
 				}
 			}
 
 		}
+	
+	/* 1era parte consiste solamente en hallar el subdominio para imprimir los subdominios dependientes a el,llamo a la segunda funcion,esto por cada vez que se encuentre el subdomonio.*/
+			/*Segundo metodo privado
+		 *  la cantidad de subdominios dependientes que tiene un subdomoinio como mucho puede ser el grado del arbol
+		 * Se va a utilizar la clase Pila. Se va a crear un array de pilas,en cada una vamos a ir apilando  los subdominios dependientes. Aprovechamos la funcionandad  LiIFO
+		 * Inicializo todas las pilas y apilo el subdominio que pase por parametro
+		 * Se tiene un entero que me va a indicar en que pila (indice) apilar los subdomonios correspondientes
+		 * Luego realizo recorrido por niveles,con nivel a 0,iniciando por el subdomonio "independiente"
+		 * 
+		 * 
+		 * Si el arbol desencolado no es el nivel y no es hoja(quiere decir que ese subdominio lo comparten varios subdominios de niveles inferiores)
+		 * 		Me fijo cuantos subdominios dependientes tiene este ultimo(hijos)
+		 * 		Apilo el arbol desencolado(subdominio) por cada subdominio dependiente que tenga
+		 * Si el arbol desencolado es hoja
+		 * 		
+		 * 
+		 * 			recorro los hijos de el tope de todas las pilas y si coincide con el elemento a agregar, lo apilo y aumento el indice // Esto soluiona inconveniente de agregar subdomonio correctamente //Si es hoja solo lo almaceno en el indice q corresponde si ya lo almccena como es una hoja salgo de la ejecucion
+		 * 
+		 * Luego encolo los hijos de arbol desencolado
+		 * 
+		 * Si el arbol desencolado es null 
+		 * 	 Si la cola no esta vacia
+		 * 		Aumento el nivel y el comtado de pila se pone a cero, ya que al aumentar el nivel,el indice empezaria de 0 y por ultimo encollo el null
+		 * 
+		 * 
+		 * 
+		 * Una vez que termino el recorrido
+		 * Voy desapilando cada pila del array,aprovechando su funcionamiento,sumo cada dominio en un string y luego lo imprimo
+		 * 
+		 * 
+		 * */	
 		
-		
-		private void _imprimirSubdominios(ArbolGeneral arbol){
+private void _imprimirSubdominios(ArbolGeneral arbol){
 			int cantUrls= arbol.ancho();
-
 			Pila[] Urls = new Pila [cantUrls]; //Array de Pilas,cada pila va a ir formando el dominio
 			for (int i = 0; i < Urls.Length; i++) {
 				//Las inicializo y ya almaceno el primer subdominio
@@ -493,38 +517,26 @@ namespace TPF
 									break;
 								} //Si es hoja solo lo almaceno en el indice q corresponde
 								contPila++;
+							
+							
 							}
-						
-//					for (int i = 0; i < Urls.Length; i++) {
-//								ArbolGeneral arbolAuxx = Urls[i].tope();
-//								foreach (ArbolGeneral ar in arbolAuxx.getHijos()) {
-//									if(string.Compare( ar.textoEtiqueta,arbolAux.getTextoEtiquetaRaiz()) == 0){
-//										Urls[i].apilar(arbolAux);
-//										contPila++;
-//										break;}
-//								}
-//						
-//					}
-						
-							
-							
+					
+					
+						}
 					}
-					
-					
-				}
 					foreach(var hijo in arbolAux.hijos)
 						c.encolar(hijo);
-
-			}
+				}
+			
 			}
 			
-//			Imprimo todos los subdominios resultantes
-			for (int i = 0; i < Urls.Length; i++) {
+
+			for (int i = 0; i < Urls.Length; i++) {//Imprimo todos los subdominios resultantes
 				string url="";
 				while(!Urls[i].vacia()){
 					ArbolGeneral aux= Urls[i].desapilar();
 					string aux2= aux.getTextoEtiquetaRaiz();
-					if(!Urls[i].vacia())
+					if(!Urls[i].vacia())   //Si tiene un proximo elemento
 						url+=aux2+".";
 					else
 						url+=aux2;
@@ -532,53 +544,36 @@ namespace TPF
 				Console.WriteLine(url);
 			}
 		}
-
+	
 
 
 		public void profundidadNodos(int profundidad){
-			/*Dada una profundidad imprimir las cantidades de dominios de nivel superior,
-subdominios y equipos ubicados a dicha profundidad.*/
 			Cola c = new Cola();
 			ArbolGeneral arbolAux;
-			int cantAntes=0,cantProfundidad=0;
-			
-			int nivel = 0;
-			
+			int cantAntes=0,cantProfundidad=0,nivel = 0;
 			c.encolar(this);
 			c.encolar(null);
 			
-			Console.Write("Nivel " + nivel + ": ");
-			
 			while(!c.esVacia() ){
-				
 				if(nivel>profundidad)
 					break;
 				arbolAux = c.desencolar();
-				
 				if(arbolAux == null){
 					if(!c.esVacia()){
 						nivel++;
-						
-						Console.Write("\nNivel " + nivel + ": ");
 						c.encolar(null);
 					}
 				}
 				else{
 					if(nivel==profundidad)
-					{
 						cantProfundidad++;
-					}
 					else{
-						if(nivel !=0)
+						if(nivel != 0 )
 							cantAntes++;
 					}
-					
-					
 					foreach(var hijo in arbolAux.hijos)
 						c.encolar(hijo);
-				}
-				
-				
+				}	
 			}
 			
 			Console.WriteLine("Cantidad de dominios de nivel superior: "+cantAntes);

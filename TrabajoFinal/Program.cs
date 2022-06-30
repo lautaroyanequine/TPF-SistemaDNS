@@ -17,83 +17,9 @@ namespace TPF
 			Console.WriteLine("Hello World!");
 			
 			ArbolGeneral DNS = new ArbolGeneral("",null);
-//			
-//			Menu(DNS);
+			Menu(DNS);
 			
-//			string prueba= "www.wikipedia.org";
-//			string ip= "192.168.0.0.";
-//			string servicio= "DNS";
-//			
-//			Console.WriteLine(string.Compare(ip,ip));
-//			
-//			string[] valores= prueba.Split('.');
-//			Array.Reverse(valores);
-//			foreach(var g in valores)
-//				Console.WriteLine(g);
-//			
-//			ArbolGeneral a= new ArbolGeneral( valores[0]);
-//			ArbolGeneral b= new ArbolGeneral( valores[1]);
-//			ArbolGeneral c= new ArbolGeneral( valores[2]);
-			DNS.agregarDominio("www.facebook.com","1","web");
-						DNS.agregarDominio("www.google.com","1","web");
-			DNS.agregarDominio("wwe.facebook.com","2","web");
-			DNS.agregarDominio("wwe.es.facebook.com","2","web");
-			DNS.agregarDominio("www.facebook.org","3","web");
-			DNS.eliminarUrl("www");
-			DNS.devolverIpyServicios("www.facebook.org");
-//			DNS.agregarDominio("www.es.facebook.com","1","web");
-//						DNS.agregarDominio("www.edds.facebook.com","1","web");
-//									DNS.agregarDominio("www.es.river.facebook.com","1","web");
-//			DNS.agregarDominio("www.google.com","2","web");
-//			DNS.agregarDominio("wwee.facebook.org","1","web");
-//			DNS.agregarDominio("www.google.org","1","web");
-			DNS.porNivelesConSeparacion();
-//			DNS.eliminarUrl("com");
-//			Console.WriteLine("s");
-//			DNS.porNivelesConSeparacion();
-////			DNS.agregarDominio("www.Wikipedia.com","1","web");
-//						DNS.porNivelesConSeparacion();
-//						Console.WriteLine("------------------ ");
-////						DNS.eliminarUrl("com");
-//						DNS.imprimirSubdominios("facebook");
-//						DNS.eliminarUrl("es");
-////												DNS.eliminarUrl("www.es.Wikipedia.com");
-//						Console.WriteLine("sin nada");
-//												DNS.imprimirSubdominios("facebook");
-//												DNS.porNivelesConSeparacion();
-////						DNS.porNivelesConSeparacion();
-////						DNS.devolverIpyServicios("www.google.com");
-//			
-////						DNS.porNivelesConSeparacion();
-////			DNS.agregarDominio("www.Wikipedia.org","1","web");
-////			DNS.agregarDominio("weew.Wikipedia.org","1","web");
-//////			DNS.agregarDominio("ee.Wikipedia.org","1","web");
-////			DNS.agregarDominio("ee.Wikipedia.com","1","web");
-////			DNS.porNivelesConSeparacion();
-////			DNS.agregarDominio("www.Wikipediña.org","1","web");
-////			DNS.porNivelesConSeparacion();
-////			DNS.agregarDominio("e.Wikipedia.com","1","web");
-////			DNS.porNivelesConSeparacion();
-////			DNS.agregarDominio("www.Weikipedia.com","1","web");
-////						DNS.porNivelesConSeparacion();
-////			DNS.agregarDominio("www.Weikipedia.es","1","web");
-////			DNS.porNivelesConSeparacion();
-////			DNS.agregarDominio("es.google.ar","1","web");
-//			////			DNS.agregarHijo(a);
-//			////			DNS.agregarHijo(b);
-//			////			DNS.agregarHijo(c);
-////			DNS.porNivelesConSeparacion();
-//
-//
-			
-			
-			
-			
-			
-			
-			
-			
-			
+	
 			
 			
 			// TODO: Implement Functionality Here
@@ -108,9 +34,7 @@ namespace TPF
 			Console.WriteLine("BIENVENIDOS Al SISTEMA DNS ");
 			Console.WriteLine("--------------------------------------------------------");
 			int opcion,opcion2;
-			
-			
-			
+		
 			do{
 
 				Console.Write("\n1. Ingresar a Administración " +
@@ -122,26 +46,21 @@ namespace TPF
 					confirmarOpcion(opcion2,1);
 				}
 				catch(OpcionInvalida){
-							Console.WriteLine("\nIngrese una opcion valida por favor");
-										    //Para que salga del while,se repita el pedido de instrucciones
+							Console.WriteLine("\nIngrese una opcion valida por favor"); //Para que salga del while,se repita el pedido de instrucciones
+										   
 				}
-				
-
-				
 				
 				switch(opcion2)
 				{
 						case 1:{  //Modulo de Administracion
 							do{
 								
-							
 								Console.Clear();
 								Console.Write("\n1. Ingreso y almacenamiento de nombres de dominio correspondientes a equipos conectado a la red " +
 								              "\n2. Eliminación de nombres de equipos." +
 								              "\n0. Volver al menu principal" +
 								              "\nIngrese una opción: ");
 								
-
 								opcion = int.Parse(Console.ReadLine());
 								bool auxmenu=true;
 								Console.Clear();
@@ -155,7 +74,6 @@ namespace TPF
 										{
 											case 1: 
 												{ 
-													
 													
 													Console.WriteLine("Proceda a ingresar los datos  para agregar el equipo a la red");
 													Console.Write("Ingrese el dominio ej.'www.Wikipedia.org': ");
@@ -181,10 +99,6 @@ namespace TPF
 											case 0 : break;
 												
 										}
-											
-										
-											
-										
 										
 									}
 									
@@ -250,11 +164,7 @@ namespace TPF
 												
 											case 0 : break;
 												
-										}
-										
-										
-										
-										
+										}	
 										
 									}
 									
@@ -275,16 +185,9 @@ namespace TPF
 				}
 					
 				
-				
-				
-				
 			}
-			while(opcion2 !=0);
-				
-			
-			
+			while(opcion2 !=0);      //Tenerlo en un while me obliga a elegir la opcion correcta siempre
 			Console.WriteLine();
-		
 			Console.WriteLine("Fin del progrma");
 			
 		}
@@ -312,5 +215,71 @@ namespace TPF
 	}
 	
 	
-	
+	//			
+////			string prueba= "www.wikipedia.org";
+////			string ip= "192.168.0.0.";
+////			string servicio= "DNS";
+////			
+////			Console.WriteLine(string.Compare(ip,ip));
+////			
+////			string[] valores= prueba.Split('.');
+////			Array.Reverse(valores);
+////			foreach(var g in valores)
+////				Console.WriteLine(g);
+////			
+////			ArbolGeneral a= new ArbolGeneral( valores[0]);
+////			ArbolGeneral b= new ArbolGeneral( valores[1]);
+////			ArbolGeneral c= new ArbolGeneral( valores[2]);
+//			DNS.agregarDominio("www.facebook.com","1","web");
+//						DNS.agregarDominio("www.google.com","1","web");
+//			DNS.agregarDominio("wwe.facebook.com","2","web");
+//			DNS.agregarDominio("wwe.es.facebook.com","2","web");
+//			DNS.agregarDominio("www.facebook.org","3","web");
+//			DNS.profundidadNodos(2);
+//			DNS.devolverIpyServicios("www.facebook.org");
+////			DNS.agregarDominio("www.es.facebook.com","1","web");
+////						DNS.agregarDominio("www.edds.facebook.com","1","web");
+////									DNS.agregarDominio("www.es.river.facebook.com","1","web");
+////			DNS.agregarDominio("www.google.com","2","web");
+////			DNS.agregarDominio("wwee.facebook.org","1","web");
+////			DNS.agregarDominio("www.google.org","1","web");
+//			DNS.porNivelesConSeparacion();
+////			DNS.eliminarUrl("com");
+////			Console.WriteLine("s");
+////			DNS.porNivelesConSeparacion();
+//////			DNS.agregarDominio("www.Wikipedia.com","1","web");
+////						DNS.porNivelesConSeparacion();
+////						Console.WriteLine("------------------ ");
+//////						DNS.eliminarUrl("com");
+////						DNS.imprimirSubdominios("facebook");
+////						DNS.eliminarUrl("es");
+//////												DNS.eliminarUrl("www.es.Wikipedia.com");
+////						Console.WriteLine("sin nada");
+////												DNS.imprimirSubdominios("facebook");
+////												DNS.porNivelesConSeparacion();
+//////						DNS.porNivelesConSeparacion();
+//////						DNS.devolverIpyServicios("www.google.com");
+////			
+//////						DNS.porNivelesConSeparacion();
+//////			DNS.agregarDominio("www.Wikipedia.org","1","web");
+//////			DNS.agregarDominio("weew.Wikipedia.org","1","web");
+////////			DNS.agregarDominio("ee.Wikipedia.org","1","web");
+//////			DNS.agregarDominio("ee.Wikipedia.com","1","web");
+//////			DNS.porNivelesConSeparacion();
+//////			DNS.agregarDominio("www.Wikipediña.org","1","web");
+//////			DNS.porNivelesConSeparacion();
+//////			DNS.agregarDominio("e.Wikipedia.com","1","web");
+//////			DNS.porNivelesConSeparacion();
+//////			DNS.agregarDominio("www.Weikipedia.com","1","web");
+//////						DNS.porNivelesConSeparacion();
+//////			DNS.agregarDominio("www.Weikipedia.es","1","web");
+//////			DNS.porNivelesConSeparacion();
+//////			DNS.agregarDominio("es.google.ar","1","web");
+////			////			DNS.agregarHijo(a);
+////			////			DNS.agregarHijo(b);
+////			////			DNS.agregarHijo(c);
+//////			DNS.porNivelesConSeparacion();
+////
+////
+//			
 }
